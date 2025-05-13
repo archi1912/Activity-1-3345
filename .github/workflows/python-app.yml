@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: write  # Needed to push changes
+  contents: write
 
 jobs:
   build:
@@ -37,6 +37,13 @@ jobs:
 
     - name: Create a test file
       run: echo "This file was created by GitHub Actions on $(date)" > test_output.txt
+
+    - name: Commit file
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add test_output.txt
+        git commit -m "Add test_output.txt via GitHub Actions" || echo "No changes to commit"
 
     - name: Push changes to repo
       uses: ad-m/github-push-action@v0.6.0
